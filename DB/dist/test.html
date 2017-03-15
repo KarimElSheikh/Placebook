@@ -1,0 +1,98 @@
+<html>
+
+    <head>
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+        <link href="css/material-wfont.min.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+	
+	
+	
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="HIco" href="./">Placebook</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<form class="navbar-form navbar-left" action="search_user.php" method="get" onsubmit="return searchForm();">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Enter place name" name="name" id="searchBox">
+							<input type="hidden" id="searchType" value = "1">
+						</div>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default active">
+								<input type="radio" name="options" id="option1" autocomplete="off" value="1" checked> Places
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="options" id="option2" autocomplete="off"  value="2"> People
+							</label>
+						</div>
+						<button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><span class="fa fa-user"></span></a><li>
+						<li><a href="user.php?email=<?php echo $_SESSION['email'];?>" ><?php echo $_SESSION['fname']." ".$_SESSION['lname']; ?></a><li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-bars"></span></a>
+							<ul class="dropdown-menu" role="menu">	
+								<li><a href="friends.php">Friends</a></li>
+								<li><a href="threads.php">Messages</a></li>
+								<li><a href="invites.php">Invitations</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Create Place</a></li>
+								<li><a href="myplaces.php">My Places</a></li>
+								<li class="divider"></li>
+								<li><a href="register_success.php">Settings</a></li>
+								<li><a href="logout.php">Log out</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	
+	
+	
+	
+	
+	
+        <!-- Your site -->
+
+        <h1>You can add your site here.</h1>
+
+        <h2>To ensure that material-design theme is working, check out the buttons below.</h2>
+
+        <h3 class="text-muted">If you can see the ripple effect on clicking them, then you are good to go!</h3>
+
+
+        <p class="bs-component">
+            <a href="javascript:void(0)" class="btn btn-default">Default</a>
+            <a href="javascript:void(0)" class="btn btn-primary">Primary</a>
+            <a href="javascript:void(0)" class="btn btn-success">Success</a>
+            <a href="javascript:void(0)" class="btn btn-info">Info</a>
+            <a href="javascript:void(0)" class="btn btn-warning">Warning</a>
+            <a href="javascript:void(0)" class="btn btn-danger">Danger</a>
+            <a href="javascript:void(0)" class="btn btn-link">Link</a>
+        </p>
+
+        <!-- Your site ends -->
+
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+        <script src="js/ripples.min.js"></script>
+        <script src="js/material.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $.material.init();
+            });
+        </script>
+
+    </body>
+
+</html>

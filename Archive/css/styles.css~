@@ -1,0 +1,28 @@
+@font-face {
+    font-family: Placebook;
+    src: url(../fonts/lobster.otf);
+}
+html,
+body {
+    margin: 0;
+	padding: 0;
+	min-width: 800px;
+}
+.HMain {
+	font-family: Placebook;
+	font-size: 100pt;
+	color: #1b9af7;
+	text-align: center;
+}
+.wrap {
+	min-height: 100%;
+    height: auto !important;
+	width: 80%;
+	margin-right: auto;
+	margin-left:auto;
+}
+.wrap-block {
+	width: 35%;
+	margin-right: auto;
+	margin-left:auto;
+}
