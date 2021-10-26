@@ -1,3 +1,4 @@
+
 # Placebook
 Placebook is a social media website as well as a place/location recommendation website where users sign up for accounts using their emails. The users can add other members as friends on the system, they can specify the places that they've been to, like, or rate them. They can pose questions about the places and get recommendations of places to visit or friends who have similar likings.
 
@@ -40,10 +41,10 @@ The questions and their responses could be viewed on the place page.
 This project is made using HTML/CSS, [PHP](https://www.php.net/) for the backend, and [MySQL](https://www.mysql.com/) for the database.
 
 # Usage instructions (for windows)
-* Download and install WampServer
-&nbsp;&nbsp; If you get "mysqld.exe can't start because MSVCR120.dll is missing" or a similar
-&nbsp;&nbsp; message during the install, download and install ALL versions of Microsoft Visual C/C++
-&nbsp;&nbsp; Redistributable both x86 and x64 (2008 , 2010 , 2012 , 2013 , 2015).
+* Download and install WampServer  
+&nbsp;&nbsp; If you get "mysqld.exe can't start because MSVCR120.dll is missing" or a similar  
+&nbsp;&nbsp; message during the install, download and install ALL versions of Microsoft Visual   C/C++
+&nbsp;&nbsp; Redistributable both x86 and x64 (2008 , 2010 , 2012 , 2013 , 2015).  
 &nbsp;&nbsp;&nbsp;&nbsp; Download links for all of these versions are available here: [x86](http://files.drax.ir/wampserver/vcredist_x86_Allversions.zip) and [x64](http://files.drax.ir/wampserver/vcredist_x64_Allversions.zip).
 * Run WampServer and open localhost (http://localhost/). In the following, currently you **must** use the default phpMyAdmin login of Username root and a blank password.
 * Choose phpMyAdmin and login, next choose import then select the file "tourism.sql" and click "Go" to build the database called "tourism" with its record entries for users and places, as well as add the MySQL procedures needed for the various website functions (If you happen to already have a database called "tourism" then rename it before this step).
