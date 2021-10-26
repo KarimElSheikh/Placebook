@@ -43,7 +43,7 @@ This project is made using HTML/CSS, [PHP](https://www.php.net/) for the backend
 # Usage instructions (for windows)
 * Download and install WampServer  
 &nbsp;&nbsp; If you get "mysqld.exe can't start because MSVCR120.dll is missing" or a similar  
-&nbsp;&nbsp; message during the install, download and install ALL versions of Microsoft Visual   C/C++
+&nbsp;&nbsp; message during the install, download and install ALL versions of Microsoft Visual   C/C++  
 &nbsp;&nbsp; Redistributable both x86 and x64 (2008 , 2010 , 2012 , 2013 , 2015).  
 &nbsp;&nbsp;&nbsp;&nbsp; Download links for all of these versions are available here: [x86](http://files.drax.ir/wampserver/vcredist_x86_Allversions.zip) and [x64](http://files.drax.ir/wampserver/vcredist_x64_Allversions.zip).
 * Run WampServer and open localhost (http://localhost/). In the following, currently you **must** use the default phpMyAdmin login of Username root and a blank password.
