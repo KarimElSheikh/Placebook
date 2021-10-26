@@ -29,6 +29,7 @@ body {
 }
 .HIco {
 	font-family: Placebook;
+	float: left;
 	color: #428bca;
 	font-size: 25pt;
 }

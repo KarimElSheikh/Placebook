@@ -27,7 +27,7 @@ $email=$_SESSION['email'];
 	while ($stmt->fetch()) {
 ?>
 <div>
-	<div><a href="place.php?id=<?php echo $pid;?>" class="HIco"><?php echo $name;?></a></div>
+	<div><a href="place.php?id=<?php echo $pid;?>" class="HIco"><?php echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp$name";?></a></div>
 </div>
 <?php
 }
@@ -52,7 +52,7 @@ $email=$_SESSION['email'];
 	while ($stmt->fetch()) {
 ?>
 <div>
-	<div><a href="user.php?email=<?php echo $member_email;?>" class="HIco"><?php echo $firstname .' '.$lastname;?></a></div>
+	<div><a href="user.php?email=<?php echo $member_email;?>" class="HIco"><?php echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp$firstname $lastname";?></a></div>
 </div>
 <?php
 }
