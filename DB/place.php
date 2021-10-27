@@ -450,7 +450,7 @@ $stmt = $mysqli->prepare("SELECT type, price
 	<?php } ?>
 		<div class = "row">
 			<div class="col-sm-12">
-				<strong>Notice that if you re-rate a criteria you just overwrite your previous rating.</strong>
+				<strong>Note that if you re-rate a criteria you overwrite your previous rating.</strong>
 			</div>
 		</div>
 	</div>

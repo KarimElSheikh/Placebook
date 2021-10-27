@@ -1,11 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Feb 14, 2017 at 12:23 AM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Based on a "phpMyAdmin SQL Dump"
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -1327,10 +1320,6 @@ INSERT INTO `member_comment` (`pid`, `comment_number`, `type`, `text`, `email`) 
 (1, 6, b'1', 'ggggggggggggg', 'a.n.s.a.r.y@hotmail.com'),
 (1, 7, b'1', 'sssssssssssssssssssssssssssssss', 'a.n.s.a.r.y@hotmail.com'),
 (1, 8, b'0', 'test', 'hossam.saraya@gmail.com'),
-(1, 9, b'0', '<script>alert(''xss'')</script>', 'hossam.saraya@gmail.com'),
-(1, 10, b'0', '<img onerror="alert(1)" src=x>', 'hossam.saraya@gmail.com'),
-(1, 11, b'0', '<script>alert(''xss'')</script>', 'hossam.saraya@gmail.com'),
-(1, 12, b'0', '<script>alert(''xss'')</script>', 'hossam.saraya@gmail.com'),
 (9, 1, b'0', 'rere', 'a.n.s.a.r.y@hotmail.com');
 
 --

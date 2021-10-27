@@ -1,4 +1,5 @@
 
+
 # Placebook
 Placebook is a social media website as well as a place/location recommendation website where users sign up for accounts using their emails. The users can add other members as friends on the system, they can specify the places that they've been to, like, or rate them. They can pose questions about the places and get recommendations of places to visit or friends who have similar likings.
 
@@ -50,8 +51,13 @@ This project is made using HTML/CSS, [PHP](https://www.php.net/) for the backend
 * Choose phpMyAdmin and login, next choose import then select the file "tourism.sql" and click "Go" to build the database called "tourism" with its record entries for users and places, as well as add the MySQL procedures needed for the various website functions (If you happen to already have a database called "tourism" then rename it before this step).
 * From localhost add the website folder "DB" as a Virtual Host, then proceed to run the website and login using any email that you can find in the table "member" and the unified password **abcja**. You can now use the various website features talked about in the description above.
 * Note: in the table "administraor" you will find the users who are managers of one or more places, and in the table "sys_admin" you will find the users who are system administrators of the website.
+# Demo
+A video demonstrating the friend request and adding comments on places' pages features of the website.
+
+<a href="https://www.youtube.com/watch?feature=player_embedded&v=-dRTvePcCAc" target="_blank"><img src="https://user-images.githubusercontent.com/10839251/138980526-a338321e-a208-4e57-8362-50eaab751dcf.png" 
+alt="https://www.youtube.com/watch?v=-dRTvePcCAc" width="640" height="360" border="10" /></a>
 # To do
-* Add a video showcasing the website in action (**Important!!**).
+* Add more videos showcasing the rest of the website functions.
 * Clean up the project's files more (Currently a lot of different versions of the website are present which were used during the development/testing).
 * Fix/implement the broken/missing features:
   * Upload a photo feature for a place's manager or a user isn't working at the moment.
