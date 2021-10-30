@@ -13,8 +13,8 @@ if (login_check($mysqli) == false) {
 		<title>Placebook</title>
 		<link type="text/css" rel="stylesheet" href="css/buttons.css">
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.css">
-		<link type="text/css" rel="stylesheet" href="css/styles.css">
-		<link type="text/css" rel="stylesheet" href="css/font-awesome.css">
+		<link type="text/css" rel="stylesheet" href="css/Placebook-stylesheet.css">
+		<link type="text/css" rel="stylesheet" href="css/font-awesome_modified.css">
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/buttons.js"></script>

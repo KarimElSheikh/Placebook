@@ -345,6 +345,14 @@ Having count(*) =  (Select Max(maximum.count)
 				    Group by R2.pid) maximum);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_the_average_criteria_rating_of_a_place`(IN `inPID` INT, IN `inCriteria_name` VARCHAR(50))
+    NO SQL
+BEGIN
+SELECT AVG(R.rate_value) as Rating
+FROM place P inner join rate R on P.pid = R.pid
+WHERE P.pid = inPID and R.criteria_name = inCriteria_name;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_the_overall_rating_of_a_place`(
 IN inPID int
 )

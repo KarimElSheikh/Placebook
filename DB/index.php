@@ -27,7 +27,7 @@ $email=$_SESSION['email'];
 		while ($stmt->fetch()) {
 		?>
 			<div class="row well-sm">
-				<a href="place.php?id=<?php echo $pid;?>" class="HIco" style="margin-left: 36px"><?php echo "$name";?></a>
+				<a href="place.php?id=<?php echo $pid;?>" class="HIco" style="margin-left: 36px"><?php echo $name;?></a>
 			</div>
 		<?php
 		}

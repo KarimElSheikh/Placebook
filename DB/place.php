@@ -124,11 +124,23 @@ if (isset($_GET['visit'])) {
 if (isset($_GET['criteria'])&&isset($_GET['rate'])) {
 	$criteria=$_GET['criteria'];
 	$rate=$_GET['rate'];
-	$stmt = $mysqli->prepare("call rate_a_criteria(?,?,?,?)");
-	$stmt->bind_param('ssss',$email, $criteria, $id, $rate);
+	if($rate == -1) {
+		$stmt = $mysqli->prepare("DELETE FROM rate
+								  Where member_email = ? and pid = ? and criteria_name = ?
+								 ");
+		$stmt->bind_param('sis', $email, $id, $criteria);
+		$stmt->execute();
+		// $stmt->store_result();
+		// $stmt->bind_result($imagefile);
+		// $stmt->fetch();
+		$stmt->close();
+	} else {
+		$stmt = $mysqli->prepare("call rate_a_criteria(?,?,?,?)");
+		$stmt->bind_param('ssss',$email, $criteria, $id, $rate);
 
-	$stmt->execute();
-	$stmt->close();
+		$stmt->execute();
+		$stmt->close();
+	}
 }
 
 // Check if the logged in user manages this place and set $admin if so.
@@ -254,13 +266,13 @@ $stmt->close();
 	</div>
 <?php if($admin == 1) {?>
 	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-2"><a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style ="width: 80%; margin-top: 18px;"><span class="fa fa-close"></span> Delete</a>
+		<div class="col-sm-4 subHeaderLabel" style="color: mediumblue;">Admin operations</div>
+		<div class="col-sm-2"><a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style ="width: 80%; margin-top: 18px;"><span class="fa fa-close"></span> Delete place</a>
 		<ul class="dropdown-menu" role="menu">
 			<li><a href="./adminAction.php?action=Delete&id=<?php echo $id;?>">Sure?</a></li>
 		</ul>
 		</div>
-		<div class="col-sm-2"><a href="./adminAction.php?action=delete&id=<?php echo $id;?>" class="btn btn-default" style ="width: 80%; margin-top: 18px;"><span class="fa fa-plus"></span> Invite</a></div>
+		<div class="col-sm-2"><a href="./adminAction.php?action=delete&id=<?php echo $id;?>" class="btn btn-default" style ="width: 80%; margin-top: 18px;"><span class="fa fa-plus"></span> Invite to manage</a></div>
 		<div class="col-sm-2"><a href="./create_page.php?id=<?php echo $id;?>" class="btn btn-default" style ="width: 80%; margin-top: 18px;"><span class="fa fa-refresh"></span> Update</a></div>
 		<div class="col-sm-2"><a href="./adminAction.php?action=upload&id=<?php echo $id;?>" class="btn btn-default" style ="width: 80%; margin-top: 18px;"><span class="fa fa-image"></span> Upload</a></div>
 	</div>
@@ -391,71 +403,136 @@ $stmt = $mysqli->prepare("SELECT type, price
 	</div>
 </div>
 <?php } ?>
+
+
 <div class="row">
-	<div class="col-sm-6">
-	<div class="well well-lg place-box">
-		<h1 class = "subHeaderLabel">Overall Rating: <?php echo round($avgratevalue, 1); ?></h1>
-		<div class="rating-stars-lg">
+	<div class="col-sm-6"><div class="well well-lg place-box">
 		<?php
-		if($avgratevalue < 1.5) {
-			echo '<span class="fa fa-star"></span>';
-		}
-		else if ($avgratevalue < 2) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star-half"></span>';
-		}
-		else if ($avgratevalue < 2.5) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span>';
-		}
-		else if ($avgratevalue < 3) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-half"></span>';
-		}
-		else if ($avgratevalue < 3.5) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
-		}
-		else if ($avgratevalue < 4) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star-half"></span>';
-		}
-		else if ($avgratevalue < 4.5) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star"></span>';
-		}
-		else if ($avgratevalue < 5) {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star"></span><span class="fa fa-star-half"></span>';
-		}
-		else {
-			echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+		$mysqli->close();
+		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+		$stmt = $mysqli->prepare("CALL view_rating_criterias_of_a_page(?)");
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$stmt->close();
+		while($row = $result->fetch_array(MYSQLI_NUM)) {
+			$cname = $row[0];
+			$stmt2 = $mysqli->prepare("CALL get_the_average_criteria_rating_of_a_place(?,?)");
+			$stmt2->bind_param('is', $id, $cname);
+			$stmt2->execute();
+			$stmt2->store_result();
+			$stmt2->bind_result($avg_crit_ratevalue);
+			$stmt2->fetch();
+			$stmt2->close();
+			?>
+			<div class="row">
+				<h1 class="subHeaderLabel" style="display: inline;"><?php echo "$cname: "?></h1><p style="display: inline-block; font-family: verdana; font-size: 25pt; font-weight: bold;"><?php echo round($avg_crit_ratevalue, 2)."/5";?></p>
+			</div>
+		<?php
 		}
 		?>
-		</div>
-		<h3 class = "subHeaderLabel-sm">Add a criteria</h3>
-		<form action="place.php" role="form" name="criteria_form" method = "GET">
-			<div class="input-group" class="width: 100%;">
-				<input type="text" class="form-control" name="criteria_name" autocomplete="off">
-				<input type="hidden" name="id" value="<?php echo $id; ?>">
-				<span class="input-group-btn">
-					<button class="btn btn-primary" type="submit">Add</button>
-				</span>
+		<div class=row">
+			<h1 class="subHeaderLabel" style="display: inline; font-weight: bold; font-size: 36pt;">Overall Rating: </h1><p style="display: inline-block; font-family: verdana; font-size: 25pt; font-weight: bold;"><?php echo round($avgratevalue, 2)."/5";?></p>
+			<div class="rating-stars-lg">
+			<?php
+			if($avgratevalue < 1.5) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 2) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star-half-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 2.5) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 3) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-half-o"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 3.5) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 4) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star-half-o"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 4.5) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star"></span><span class="fa fa-star-o"></span>';
+			}
+			else if ($avgratevalue < 5) {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star"></span><span class="fa fa-star-half-o"></span>';
+			}
+			else {
+				echo '<span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></span><span class="fa fa-star"></span><span class="fa fa-star"></span>';
+			}
+			?>
 			</div>
-		</form>
-		<br>
-		<strong>Notice that already added criteria are not duplicated.</strong>
+			<h3 class = "subHeaderLabel-sm">Add a criteria</h3>
+			<form action="place.php" role="form" name="criteria_form" method = "GET">
+				<div class="input-group" class="width: 100%;">
+					<input type="text" class="form-control" name="criteria_name" autocomplete="off">
+					<input type="hidden" name="id" value="<?php echo $id; ?>">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" type="submit">Add</button>
+					</span>
+				</div>
+			</form>
+			<br>
+			<strong>Note: A criteria which is already added is not duplicated.</strong>
+		</div>
+	</div></div>
+	<div class="col-sm-6"><div class="well well-lg place-box">
+		<div class = "row">
+		<div class="col-sm-3">
+			<div class="subHeaderLabel">Criteria</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="subHeaderLabel">Your rating</div>
+		</div>
+		<div class="col-sm-2">
+			<div class="subHeaderLabel"></div>
+		</div>
+		<div class="col-sm-3">
+			<div class="subHeaderLabel" style="color: mediumblue;">
+				<?php if($admin == 1) { ?>
+					Admin op.
+				<?php } ?>
+			</div>
+		</div>
+
 	</div>
-	</div>
-	<div class="col-sm-6">
-	<div class="well well-lg place-box">
 	<?php
 	$mysqli->close();
 	$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 	$stmt = $mysqli->prepare("CALL view_rating_criterias_of_a_page(?)");
-		$stmt->bind_param('i', $id);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($cname, $cmfname, $cmlname, $cmemail);
-	while($stmt->fetch()) { ?>
+	$stmt->bind_param('i', $id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$stmt->close();
+	while($row = $result->fetch_array(MYSQLI_NUM)) { $cname = $row[0]; ?>
 		<div class = "row">
-			<div class="col-sm-4">
-				<div class="subHeaderLabel-sm"><?php echo $cname; ?></div>
+			<div class="col-sm-3">
+				<div class="subHeaderLabel-sm"><?php echo $cname;?></div>
 			</div>
-			<div class="col-sm-6 rating-stars-rate">
+			<?php
+				$stmt2 = $mysqli->prepare("SELECT rate_value
+										   FROM rate
+										   Where member_email = ? and pid = ? and criteria_name = ?
+										   ");
+				$stmt2->bind_param('sis', $email, $id, $cname);
+				$stmt2->execute();
+				$stmt2->store_result();
+				$stmt2->bind_result($rate_value);
+				$stmt2->fetch();
+				$stmt2->close();
+			?>
+			<div class="col-sm-3">
+				<?php if(empty($rate_value)) {?>
+					<div style="color: green; font-family: verdana; font-size: 20pt; font-weight: bold;">N.A.</div>
+				<?php } else {?>
+					<div style="color: green; font-family: verdana; font-size: 20pt; font-weight: bold;"><?php echo $rate_value;?>/5<a href="/place.php?id=<?php echo $id;?>&criteria=<?php echo $cname;?>&rate=-1" class="pull-right btn btn-danger" style="margin-top: 8px;"><div style="margin: -4px -4px 6px -4px; height: 10px;"><span class="fa-sm fa-close"></div></span></a></div>
+				<?php
+				}
+				?>
+			</div>
+			<div class="col-sm-3 rating-stars-rate">
 				<a href="/place.php?id=<?php echo $id;?>&criteria=<?php echo $cname;?>&rate=5"
 					class="fa fa-star-o"></a><a href="place.php?id=<?php echo $id;?>&criteria=<?php echo $cname;?>&rate=4"
 					class="fa fa-star-o"></a><a href="place.php?id=<?php echo $id;?>&criteria=<?php echo $cname;?>&rate=3"
@@ -463,9 +540,9 @@ $stmt = $mysqli->prepare("SELECT type, price
 					class="fa fa-star-o"></a><a href="place.php?id=<?php echo $id;?>&criteria=<?php echo $cname;?>&rate=1"
 					class="fa fa-star-o"></a>
 			</div>
-			<div class="col-sm-2">
+			<div class="col-sm-3">
 				<?php if($admin == 1) { ?>
-				<a href="/place.php?id=<?php echo $id;?>&remove_criteria=<?php echo $cname;?>" class="pull-right btn btn-danger"><span class="fa fa-close"></span> Remove</a>
+				<a href="/place.php?id=<?php echo $id;?>&remove_criteria=<?php echo $cname;?>" class="pull-right btn btn-danger"><span class="fa fa-close"></span> Remove Criteria</a>
 				<?php } ?>
 			</div>
 		</div>
@@ -473,11 +550,10 @@ $stmt = $mysqli->prepare("SELECT type, price
 	<?php } ?>
 		<div class = "row">
 			<div class="col-sm-12">
-				<strong>Note that if you re-rate a criteria you overwrite your previous rating.</strong>
+				<strong>Note: If you re-rate a criteria you overwrite your previous rating.</strong>
 			</div>
 		</div>
-	</div>
-	</div>
+	</div></div>
 </div>
 <div class="row well well-lg place-well">
 	<div class="row">
@@ -492,7 +568,6 @@ $stmt = $mysqli->prepare("SELECT type, price
 	</div>
 	<br>
 	<?php
-	$stmt->close();
 	$stmt = $mysqli->prepare("SELECT M.firstname, M.lastname, M.email, I.image_file
 						      FROM image I
 						      INNER JOIN member M ON M.email = I.email

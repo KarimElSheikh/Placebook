@@ -27,6 +27,7 @@ body {
 .pepsi-symbol:before {
   content: "d";
 }
+
 .HIco {
 	font-family: Placebook;
 	float: left;
@@ -35,8 +36,7 @@ body {
 }
 .HIco:hover,
 .HIco:focus {
-  /* text-decoration: none; */
-  text-decoration: underline;
+  text-decoration: none;
 }
 .wrap {
 	min-height: 100%;
@@ -150,8 +150,4 @@ body {
 }
 .comment-well {
 	background-color: white;
-}
-
-.pad-left-20 {
-	padding-left: 20px
 }
