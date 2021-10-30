@@ -188,13 +188,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `Enter_info_of_place`(
 IN inPID int,
 IN inName varchar(50),
 IN inDate datetime,
-IN inLongitude Decimal (7,2),
-IN inLatitude Decimal (7,2),
+IN inLatitude Decimal (9,7),
+IN inLongitude Decimal (10,7),
 IN inInfo varchar(1000)
 )
 BEGIN
 UPDATE place
-SET name = inName, building_date = inDate, longitude = inLongitude, latitude = inLatitude
+SET name = inName, building_date = inDate, latitude = inLatitude, longitude = inLongitude
 WHERE pid = inPID;
 IF(NOT EXISTS (SELECT * FROM information WHERE pid = inPID)) THEN
 INSERT INTO information (text) VALUES (inInfo);
@@ -548,7 +548,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `search_place_by_name`(
 IN inputString varchar(50)
 )
 Begin
-Select name, building_date, longitude, latitude,pid
+Select name, building_date, latitude, longitude, pid
 From place
 Where name like (CONCAT('%',inputString,'%'));
 End$$
@@ -698,27 +698,27 @@ IN inPID int
 )
 BEGIN
 IF (EXISTS (SELECT * FROM hotel WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.longitude, P.latitude, 'Hotel' as type, I.text
+Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Hotel' as type, I.text
 From place P inner join Information I on P.pid = I.pid
 inner join hotel H on P.pid = H.pid
 WHERE P.pid = inPID;
 ELSEIF (EXISTS (SELECT * FROM museum WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.longitude, P.latitude, 'Museum' as type, M.openinghours, M.closinghours, M.ticketprice, I.text
+Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Museum' as type, M.openinghours, M.closinghours, M.ticketprice, I.text
 From place P inner join Information I on P.pid = I.pid
 inner join museum M on P.pid = M.pid
 WHERE P.pid = inPID;
 ELSEIF (EXISTS (SELECT * FROM monument WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.longitude, P.latitude, 'Monument' as type, M.description, I.text
+Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Monument' as type, M.description, I.text
 From place P inner join Information I on P.pid = I.pid
 inner join monument M on P.pid = M.pid
 WHERE P.pid = inPID;
 ELSEIF (EXISTS (SELECT * FROM city WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.longitude, P.latitude, 'City' as type, C.location, C.coastalcity, I.text
+Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'City' as type, C.location, C.coastalcity, I.text
 From place P inner join Information I on P.pid = I.pid
 inner join city C on P.pid = C.pid
 WHERE P.pid = inPID;
 ELSE
-Select P.name, P.building_date, P.longitude, P.latitude, 'Other' as type, I.text
+Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Other' as type, I.text
 From place P inner join Information I on P.pid = I.pid
 WHERE P.pid = inPID;
 END IF;
@@ -1673,8 +1673,9 @@ CREATE TABLE IF NOT EXISTS `place` (
   `next_table_id4` int(10) unsigned NOT NULL DEFAULT '0',
   `name` varchar(50) DEFAULT NULL,
   `building_date` varchar(50) DEFAULT NULL,
-  `longitude` decimal(7,2) DEFAULT NULL,
-  `latitude` decimal(7,2) DEFAULT NULL,
+  `latitude` decimal(9,7) DEFAULT NULL,
+  `longitude` decimal(10,7) DEFAULT NULL,
+  `GMaps_pb` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
@@ -1682,27 +1683,27 @@ CREATE TABLE IF NOT EXISTS `place` (
 -- Dumping data for table `place`
 --
 
-INSERT INTO `place` (`pid`, `next_table_id`, `next_table_id2`, `next_table_id3`, `next_table_id4`, `name`, `building_date`, `longitude`, `latitude`) VALUES
-(1, 3, 12, 4, 0, 'Dandi Mall', '2000-05-14 00:00:00', '31.00', '78.24'),
-(2, 0, 0, 1, 0, 'City Stars', '2005-02-28 00:00:00', '66.40', '4.00'),
-(3, 0, 0, 0, 0, 'Sheraton', '1996-10-06 00:00:00', '5.21', '16.00'),
-(4, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00'),
-(5, 0, 0, 0, 0, 'Mizo', '1990-01-02 00:00:00', '1.00', '2.00'),
-(6, 0, 0, 0, 0, 'Egyptian Museum', '2010-01-02 00:00:00', '4.00', '2.00'),
-(7, 0, 0, 0, 0, 'Air Museum', '2012-05-15 00:00:00', '30.30', '44.99'),
-(8, 0, 0, 0, 0, 'Prehistoric Museum', '2011-11-11 00:00:00', '66.30', '10.79'),
-(9, 1, 1, 0, 1, 'Cairo', '1220-05-22 00:00:00', '30.05', '31.23'),
-(10, 0, 0, 0, 0, 'Alexandria', '0880-07-03 00:00:00', '10.00', '1.15'),
-(11, 0, 0, 0, 0, 'New York', '1440-07-03 00:00:00', '55.38', '24.28'),
-(12, 0, 0, 0, 0, 'Frankfurt', '1904-07-03 00:00:00', '72.00', '4.00'),
-(13, 0, 0, 0, 0, 'Statue of Liberty', '1905-07-03 00:00:00', '2.00', '4.00'),
-(14, 0, 0, 0, 0, 'Stonehenge', '1908-02-03 00:00:00', '2.00', '24.41'),
-(15, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00'),
-(16, 0, 0, 0, 0, 'Ziad Monument', '1890-02-03 00:00:00', '19.00', '22.22'),
-(17, 0, 0, 0, 0, 'Pizza Hut', '1790-02-03 00:00:00', '19.00', '16.22'),
-(18, 0, 0, 0, 0, 'KFC', '1888-02-03 00:00:00', '19.00', '12.22'),
-(19, 0, 0, 0, 0, 'Mcdonald''s', '1989-02-03 00:00:00', '19.00', '71.77'),
-(20, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00');
+INSERT INTO `place` (`pid`, `next_table_id`, `next_table_id2`, `next_table_id3`, `next_table_id4`, `name`, `building_date`, `latitude`, `longitude`, GMaps_pb) VALUES
+(1, 3, 12, 4, 2, 'Dandy Mall', '2000-05-14 00:00:00', '30.062244', '31.028641', '!1m14!1m8!1m3!1d27624.91830729781!2d31.028641!3d30.062244!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xdb3b24f330c6ae90!2sDandy%20Mega%20Mall!5e0!3m2!1sen!2sde!4v1635614963721!5m2!1sen!2sde'),
+(2, 0, 0, 1, 0, 'City Stars', '2005-02-28 00:00:00', '66.40', '4.00', null),
+(3, 0, 0, 0, 0, 'Sheraton', '1996-10-06 00:00:00', '5.21', '16.00', null),
+(4, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null),
+(5, 0, 0, 0, 0, 'Mizo', '1990-01-02 00:00:00', '1.00', '2.00', null),
+(6, 0, 0, 0, 0, 'Egyptian Museum', '2010-01-02 00:00:00', '4.00', '2.00', null),
+(7, 0, 0, 0, 0, 'Air Museum', '2012-05-15 00:00:00', '30.30', '44.99', null),
+(8, 0, 0, 0, 0, 'Prehistoric Museum', '2011-11-11 00:00:00', '66.30', '10.79', null),
+(9, 1, 1, 0, 1, 'Cairo', '1220-05-22 00:00:00', '30.05', '31.23', null),
+(10, 0, 0, 0, 0, 'Alexandria', '0880-07-03 00:00:00', '10.00', '1.15', null),
+(11, 0, 0, 0, 0, 'New York', '1440-07-03 00:00:00', '55.38', '24.28', null),
+(12, 0, 0, 0, 0, 'Frankfurt', '1904-07-03 00:00:00', '72.00', '4.00', null),
+(13, 0, 0, 0, 0, 'Statue of Liberty', '1905-07-03 00:00:00', '2.00', '4.00', null),
+(14, 0, 0, 0, 0, 'Stonehenge', '1908-02-03 00:00:00', '2.00', '24.41', null),
+(15, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null),
+(16, 0, 0, 0, 0, 'Ziad Monument', '1890-02-03 00:00:00', '19.00', '22.22', null),
+(17, 0, 0, 0, 0, 'Pizza Hut', '1790-02-03 00:00:00', '19.00', '16.22', null),
+(18, 0, 0, 0, 0, 'KFC', '1888-02-03 00:00:00', '19.00', '12.22', null),
+(19, 0, 0, 0, 0, 'Mcdonald''s', '1989-02-03 00:00:00', '19.00', '71.77', null),
+(20, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null);
 
 -- --------------------------------------------------------
 
@@ -1724,6 +1725,8 @@ CREATE TABLE IF NOT EXISTS `professional_picture` (
 --
 
 INSERT INTO `professional_picture` (`email`, `pid`, `number`, `image_file`) VALUES
+('kimobasha3000@hotmail.com', 1, 2, 'dandy-web-s-out-21.jpg'),
+('kimobasha3000@hotmail.com', 1, 3, '2018-12-02.jpg'),
 ('a.n.s.a.r.y@hotmail.com', 9, 1, '1.jpg');
 
 --

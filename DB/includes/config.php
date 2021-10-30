@@ -28,11 +28,11 @@
 /**
  * These are the database login details
  */
-define("HOST", "localhost"); 			// The host you want to connect to. 
-define("USER", "root"); 			// The database username. 
-define("PASSWORD", ""); 	// The database password. 
-define("DATABASE", "tourism"); 
-define("SYSADMIN","ansary510@gmail.com");            // The database name.
+define("HOST", "localhost"); 			   // The host you want to connect to. 
+define("USER", "root"); 			       // The database username. 
+define("PASSWORD", ""); 	               // The database password. 
+define("DATABASE", "tourism");             // The database name.
+define("SYSADMIN","ansary510@gmail.com");
 
 /**
  * Who can register and what the default role will be
@@ -55,5 +55,4 @@ define("DEFAULT_ROLE", "member");
  * 
  * If you are using an HTTPS connection, change this to TRUE
  */
-define("SECURE", FALSE);    // For development purposes only!!!!
-
+define("SECURE", FALSE);  // For development purposes only!!!!
