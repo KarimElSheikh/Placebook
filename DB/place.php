@@ -1,5 +1,4 @@
 <?php
-include_once 'includes/config.php';
 include "header.php";
 if(!isset($_GET["id"])){
 	header('Location: ./');
@@ -181,14 +180,6 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-function debug_to_console($data) {
-    $output = $data;
-    if (is_array($output))
-        $output = implode(',', $output);
-
-    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-}
-
 // Retrieve all information about the current place (given by $id).
 $stmt = $mysqli->prepare("CALL view_information(?)");
 $stmt->bind_param('i', $id);
@@ -199,10 +190,10 @@ $stmt->close();
 // Retrieve the latest professional picture of the current place.
 $stmt = $mysqli->prepare("SELECT image_file
 						  FROM professional_picture
-						  Where email = ? and pid = ?
+						  WHERE pid = ?
 						  Order By number Desc
 						  Limit 1");
-$stmt->bind_param('si', $email, $id);
+$stmt->bind_param('i', $id);
 $stmt->execute();
 $stmt->store_result();
 $stmt->bind_result($imagefile);
@@ -234,7 +225,7 @@ $stmt->close();
 ?>
 <div class="row well well-lg place-well">
 	<div class = "row">
-		<div class="col-sm-6 subHeaderLabel"><?php echo $data["name"];?></div>
+		<div class="col-sm-6 subHeaderLabel"><?php echo utf8_encode($data["name"]);?></div>
 		<?php if($_SESSION['admin']==1 && ($admin==0) ){
 			$stmt = $mysqli->prepare("SELECT *
 									  FROM contact_to_add_place
@@ -282,7 +273,7 @@ $stmt->close();
 	<div class="col-sm-6">
 		<div class="place-box">
 			<div class="well well-lg">
-			<img src="images/<?php echo $imagefile;?>" alt="<?php echo $data["name"];?>" width="100%" height="375">
+				<img src="images/<?php echo utf8_encode($imagefile);?>" alt="<?php echo utf8_encode($data["name"]);?>" width="100%" height="375">
 			</div>
 		</div>
 	</div>
@@ -321,7 +312,7 @@ $stmt = $mysqli->prepare("SELECT type, price
 				 echo $roomtype.": "."<span class='fa fa-dollar'></span>".$roomprice."<br>";
 			} ?>
 		</div>
-		<div class="col-sm-3"><?php echo $data["text"]; ?></div>
+		<div class="col-sm-3"><?php echo utf8_encode($data["text"]); ?></div>
 	</div>
 </div>
 <?php } else if($data["type"] == "Restaurant") { ?>
@@ -337,7 +328,7 @@ $stmt = $mysqli->prepare("SELECT type, price
 		<div class="col-sm-2"><?php echo $data["building_date"]; ?></div>
 		<div class="col-sm-2"><?php echo $data["style"]; ?></div>
 		<div class="col-sm-2"><?php echo $data["cuisine"]; ?></div>
-		<div class="col-sm-3"><?php echo $data["text"]; ?></div>
+		<div class="col-sm-3"><?php echo utf8_encode($data["text"]); ?></div>
 	</div>
 </div>
 <?php } else if($data["type"] == "Museum") { ?>
@@ -355,7 +346,7 @@ $stmt = $mysqli->prepare("SELECT type, price
 		<div class="col-sm-2"><?php echo $data["openinghours"]; ?></div>
 		<div class="col-sm-2"><?php echo $data["closinghours"]; ?></div>
 		<div class="col-sm-2"><?php echo $data["ticketprice"]; ?></div>
-		<div class="col-sm-3"><?php echo $data["text"]; ?></div>
+		<div class="col-sm-3"><?php echo utf8_encode($data["text"]); ?></div>
 	</div>
 </div>
 <?php } else if($data["type"] == "Monument") { ?>
@@ -368,8 +359,8 @@ $stmt = $mysqli->prepare("SELECT type, price
 	<br>
 	<div class="row">
 		<div class="col-sm-2"><?php echo $data["building_date"]; ?></div>
-		<div class="col-sm-2"><?php echo $data["description"]; ?></div>
-		<div class="col-sm-3"><?php echo $data["text"]; ?></div>
+		<div class="col-sm-2"><?php echo utf8_encode($data["description"]); ?></div>
+		<div class="col-sm-3"><?php echo utf8_encode($data["text"]); ?></div>
 	</div>
 </div>
 <?php } else if($data["type"] == "City") { ?>
@@ -387,7 +378,7 @@ $stmt = $mysqli->prepare("SELECT type, price
 		<div class="col-sm-2">
 		<?php if($data["coastalcity"] == 0 ) echo "No"; else echo "Yes" ;?>
 		</div>
-		<div class="col-sm-3"><?php echo $data["text"]; ?></div>
+		<div class="col-sm-3"><?php echo utf8_encode($data["text"]); ?></div>
 	</div>
 </div>
 <?php } else { ?>
@@ -399,7 +390,7 @@ $stmt = $mysqli->prepare("SELECT type, price
 	<br>
 	<div class="row">
 		<div class="col-sm-2"><?php echo $data["building_date"]; ?></div>
-		<div class="col-sm-3"><?php echo $data["text"]; ?></div>
+		<div class="col-sm-3"><?php echo utf8_encode($data["text"]); ?></div>
 	</div>
 </div>
 <?php } ?>

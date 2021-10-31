@@ -136,9 +136,9 @@ $stmt->close();
 	while ($stmt->fetch()) {
 
 		?>
-	<div>
-	<div><a href="place.php?id=<?php echo $pid;?>" class="HIco"><?php echo $name;?></a></div>
-</div>
+	<div class="row well-sm">
+		<div><a class="HIco" href="place.php?id=<?php echo $pid;?>" style="float: none; margin-left: 36px"><?php echo $name;?></a></div>
+	</div>
 	<?php
 }
 }
@@ -161,9 +161,9 @@ $stmt->close();
 	while ($stmt->fetch()) {
 
 		?>
-	<div>
-	<div><a href="place.php?id=<?php echo $pid;?>" class="HIco"><?php echo $name;?></a></div>
-</div>
+	<div class="row well-sm">
+		<div><a class="HIco" href="place.php?id=<?php echo $pid;?>" style="float: none; margin-left: 36px"><?php echo $name;?></a></div>
+	</div>
 	<?php
 }
 }

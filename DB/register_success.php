@@ -8,8 +8,8 @@ include_once 'includes/functions.php';
 		<title>Placebook</title>
 		<link rel="stylesheet" href=css/buttons.css">
 		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/styles.css">
-		<link rel="stylesheet" href="css/font-awesome.css">
+		<link rel="stylesheet" href="css/Placebook-stylesheet.css">
+		<link rel="stylesheet" href="css/font-awesome_modified.css">
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/buttons.js"></script>

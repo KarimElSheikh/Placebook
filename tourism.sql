@@ -973,7 +973,7 @@ CREATE TABLE IF NOT EXISTS `add_friend` (
   `accept` bit(1) DEFAULT b'0',
   PRIMARY KEY (`reciever_email`,`sender_email`),
   KEY `sender_email` (`sender_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `add_friend`
@@ -1010,7 +1010,7 @@ INSERT INTO `add_friend` (`sender_email`, `reciever_email`, `accept`) VALUES
 CREATE TABLE IF NOT EXISTS `administrator` (
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `administrator`
@@ -1038,7 +1038,7 @@ CREATE TABLE IF NOT EXISTS `answer` (
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pid`,`question_number`,`answer_number`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `answer`
@@ -1075,7 +1075,7 @@ CREATE TABLE IF NOT EXISTS `city` (
   `location` varchar(50) DEFAULT NULL,
   `coastalcity` bit(1) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `city`
@@ -1101,7 +1101,7 @@ CREATE TABLE IF NOT EXISTS `contact_to_add_place` (
   PRIMARY KEY (`email1`,`pid`),
   KEY `pid` (`pid`),
   KEY `email2` (`email2`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `contact_to_add_place`
@@ -1122,7 +1122,7 @@ CREATE TABLE IF NOT EXISTS `facility` (
   `fid` int(11) NOT NULL DEFAULT '0',
   `description` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`pid`,`fid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `facility`
@@ -1149,7 +1149,7 @@ CREATE TABLE IF NOT EXISTS `hotel` (
   `pid` int(11) NOT NULL,
   `next_table_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `hotel`
@@ -1173,7 +1173,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `image_file` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`pid`,`number`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `image`
@@ -1213,7 +1213,7 @@ CREATE TABLE IF NOT EXISTS `information` (
   `admin_email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pid`),
   KEY `admin_email` (`admin_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `information`
@@ -1254,7 +1254,7 @@ CREATE TABLE IF NOT EXISTS `invite` (
   PRIMARY KEY (`admin1`,`admin2`,`pid`),
   KEY `admin2` (`admin2`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `invite`
@@ -1276,7 +1276,7 @@ CREATE TABLE IF NOT EXISTS `manage_place` (
   `email` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`pid`,`email`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `manage_place`
@@ -1323,7 +1323,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   `address` varchar(200) DEFAULT NULL,
   `nationality` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `member`
@@ -1369,7 +1369,7 @@ CREATE TABLE IF NOT EXISTS `member_comment` (
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pid`,`comment_number`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `member_comment`
@@ -1412,7 +1412,7 @@ CREATE TABLE IF NOT EXISTS `member_liked` (
   `pid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`member_email`,`pid`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `member_liked`
@@ -1609,7 +1609,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`reciever_email`,`sender_email`,`message_number`),
   KEY `sender_email` (`sender_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `message`
@@ -1662,7 +1662,7 @@ CREATE TABLE IF NOT EXISTS `monument` (
   `pid` int(11) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `monument`
@@ -1672,7 +1672,7 @@ INSERT INTO `monument` (`pid`, `description`) VALUES
 (13, 'Symbol of Liberty'),
 (14, 'Made in Ancient Greece'),
 (15, 'House of Horror'),
-(16, 'To Honor the great Ziad');
+(16, 'The Unknown Soldier Memorial in Cairo is a pyramid-shaped monument in Nasr City. Its construction was ordered by president Anwar Sadat in 1974 in honour of Egyptians and Arabs who lost their lives in the 1973 October War.');
 
 -- --------------------------------------------------------
 
@@ -1686,7 +1686,7 @@ CREATE TABLE IF NOT EXISTS `museum` (
   `closinghours` varchar(500) DEFAULT NULL,
   `ticketprice` decimal(9,2) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `museum`
@@ -1707,7 +1707,7 @@ CREATE TABLE IF NOT EXISTS `phone_number` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `phone_numbers` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`email`,`phone_numbers`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `phone_number`
@@ -1741,7 +1741,7 @@ CREATE TABLE IF NOT EXISTS `place` (
   `longitude` decimal(10,7) DEFAULT NULL,
   `GMaps_pb` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `place`
@@ -1749,25 +1749,25 @@ CREATE TABLE IF NOT EXISTS `place` (
 
 INSERT INTO `place` (`pid`, `next_table_id`, `next_table_id2`, `next_table_id3`, `next_table_id4`, `name`, `building_date`, `latitude`, `longitude`, GMaps_pb) VALUES
 (1, 3, 12, 4, 2, 'Dandy Mall', '2000-05-14 00:00:00', '30.062244', '31.028641', '!1m14!1m8!1m3!1d27624.91830729781!2d31.028641!3d30.062244!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xdb3b24f330c6ae90!2sDandy%20Mega%20Mall!5e0!3m2!1sen!2sde!4v1635614963721!5m2!1sen!2sde'),
-(2, 0, 0, 1, 0, 'City Stars', '2005-02-28 00:00:00', '66.40', '4.00', null),
-(3, 0, 0, 0, 0, 'Sheraton', '1996-10-06 00:00:00', '5.21', '16.00', null),
-(4, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null),
-(5, 0, 0, 0, 0, 'Mizo', '1990-01-02 00:00:00', '1.00', '2.00', null),
-(6, 0, 0, 0, 0, 'Egyptian Museum', '2010-01-02 00:00:00', '4.00', '2.00', null),
-(7, 0, 0, 0, 0, 'Air Museum', '2012-05-15 00:00:00', '30.30', '44.99', null),
-(8, 0, 0, 0, 0, 'Prehistoric Museum', '2011-11-11 00:00:00', '66.30', '10.79', null),
-(9, 1, 1, 0, 1, 'Cairo', '1220-05-22 00:00:00', '30.05', '31.23', null),
-(10, 0, 0, 0, 0, 'Alexandria', '0880-07-03 00:00:00', '10.00', '1.15', null),
-(11, 0, 0, 0, 0, 'New York', '1440-07-03 00:00:00', '55.38', '24.28', null),
-(12, 0, 0, 0, 0, 'Frankfurt', '1904-07-03 00:00:00', '72.00', '4.00', null),
-(13, 0, 0, 0, 0, 'Statue of Liberty', '1905-07-03 00:00:00', '2.00', '4.00', null),
-(14, 0, 0, 0, 0, 'Stonehenge', '1908-02-03 00:00:00', '2.00', '24.41', null),
-(15, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null),
-(16, 0, 0, 0, 0, 'Ziad Monument', '1890-02-03 00:00:00', '19.00', '22.22', null),
-(17, 0, 0, 0, 0, 'Pizza Hut', '1790-02-03 00:00:00', '19.00', '16.22', null),
-(18, 0, 0, 0, 0, 'KFC', '1988-02-03 00:00:00', '30.0247740', '31.2168040', '!1m18!1m12!1m3!1d1039220.4804181572!2d30.449387532583305!3d31.176895759059406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145846d882f78805%3A0xd3b9c941409d7dad!2sKFC!5e0!3m2!1sen!2sde!4v1635638454937!5m2!1sen!2sde'),
-(19, 0, 0, 0, 0, 'Mcdonald''s', '1989-02-03 00:00:00', '19.00', '71.77', null),
-(20, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null);
+(2, 0, 0, 1, 0, 'City Stars', '2005-02-28 00:00:00', '30.0729628', '31.3433675', '!1m18!1m12!1m3!1d2441.4564477933527!2d31.34336753268493!3d30.072962835630257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145815f8139c47a3%3A0xc1744516bae86a18!2sCitystars%20Heliopolis!5e0!3m2!1sen!2sde!4v1635649558312!5m2!1sen!2sde'),
+(3, 0, 0, 0, 0, 'Sheraton', '1996-10-06 00:00:00', '30.0391884', '31.2180973', '!1m18!1m12!1m3!1d3453.9187631781515!2d31.218097315521575!3d30.039188381884177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145840d4e3acf7d9%3A0x3687d919cd672753!2sSheraton%20Cairo%20Hotel%20%26%20Casino!5e0!3m2!1sen!2sde!4v1635649660201!5m2!1sen!2sde'),
+(4, 0, 0, 0, 0, 'Flamenco', '0000-00-00 00:00:00', '30.0637516', '31.2152574', '!1m18!1m12!1m3!1d3453.06219899004!2d31.215257436296053!3d30.063751550523264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14584799cd3c663b%3A0xbdb37d97ca8eca3d!2sFlamenco%20Cairo%20Hotel!5e0!3m2!1sen!2sde!4v1635649773463!5m2!1sen!2sde'),
+(5, 0, 0, 0, 0, 'Horizon Shahrazad', '1990-01-02 00:00:00', '30.0594653', '31.2234449', '!1m14!1m8!1m3!1d3453.2117143737555!2d31.2234449!3d30.0594653!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145841206070f3c9%3A0xe0c3ce57b14dd3a3!2sHorizon%20Shahrazad!5e0!3m2!1sen!2sde!4v1635649897985!5m2!1sen!2sde'),
+(6, 0, 0, 0, 0, 'The National Museum of Egyptian Civilization', '2010-01-02 00:00:00', '30.0081493', '31.2395057', '!1m14!1m8!1m3!1d13820.00098719995!2d31.2395057!3d30.0081493!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458476863e39e8f%3A0xc2e058446f8f145d!2sThe%20National%20Museum%20of%20Egyptian%20Civilization!5e0!3m2!1sen!2sde!4v1635651311221!5m2!1sen!2sde'),
+(7, 0, 0, 0, 0, 'Air Force Museum', '2012-05-15 00:00:00', '30.099966', '31.3424736', '!1m18!1m12!1m3!1d13807.192700156224!2d31.34247356977539!3d30.099966000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145815e3b35cccdd%3A0x2a5c0f4fc8f246b4!2sAir%20Force%20Museum!5e0!3m2!1sen!2sde!4v1635651359179!5m2!1sen!2sde'),
+(8, 0, 0, 0, 0, 'Egyptian Geology Museum', '2011-11-11 00:00:00', '29.9963985', '31.1938763', '!1m14!1m8!1m3!1d6910.818822282689!2d31.1938763!3d29.9963985!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14584708984a686d%3A0x288264b9d0a141e1!2sEgyptian%20Geology%20Museum!5e0!3m2!1sen!2sde!4v1635651411990!5m2!1sen!2sde'),
+(9, 1, 1, 0, 1, 'Cairo', '1220-05-22 00:00:00', '30.0595581', '31.2234449', '!1m18!1m12!1m3!1d55251.33564058432!2d31.223444940172087!3d30.059558098294147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Cairo%20Governorate%2C%20Egypt!5e0!3m2!1sen!2sde!4v1635656075959!5m2!1sen!2sde'),
+(10, 0, 0, 0, 0, 'Alexandria', '0880-07-03 00:00:00', '31.2240349', '29.8148008', '!1m18!1m12!1m3!1d218360.36364995778!2d29.814800765744582!3d31.224034935279008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f5c49126710fd3%3A0xb4e0cda629ee6bb9!2sAlexandria%2C%20Alexandria%20Governorate%2C%20Egypt!5e0!3m2!1sen!2sde!4v1635656147635!5m2!1sen!2sde'),
+(11, 0, 0, 0, 0, 'Luxor', '1440-07-03 00:00:00', '25.4924438', '32.3246356', '!1m18!1m12!1m3!1d460978.7362089491!2d32.32462814236583!3d25.49182389579171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x144905009a9154d9%3A0xaface7ce9b7720d!2sLuxor%20Governorate%2C%20Egypt!5e0!3m2!1sen!2sde!4v1635656205061!5m2!1sen!2sde'),
+(12, 0, 0, 0, 0, 'Sharm El-Sheikh', '1904-07-03 00:00:00', '27.9467815', '34.3137337', '!1m18!1m12!1m3!1d56392.6203939505!2d34.3137337321136!3d27.94678149186002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14533bca3624d2e3%3A0xdd987e9c1945fd9c!2sSharm%20El-Sheikh%2C%20Qesm%20Sharm%20Ash%20Sheikh%2C%20South%20Sinai%20Governorate%2C%20Egypt!5e0!3m2!1sen!2sde!4v1635656362341!5m2!1sen!2sde'),
+(13, 0, 0, 0, 0, 'Great Sphinx of Giza', '1905-07-03 00:00:00', '29.9752687', '31.1025485', '!1m14!1m8!1m3!1d6912.289575583927!2d31.1025485!3d29.9752687!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14584f62a3aea979%3A0xc9d3f0a64066bda9!2sGreat%20Sphinx%20of%20Giza!5e0!3m2!1sen!2sde!4v1635651749484!5m2!1sen!2sde'),
+(14, 0, 0, 0, 0, 'Ramses II Obelisk', '1908-02-03 00:00:00', '30.0656573', '31.2789281', '!1m14!1m8!1m3!1d3452.995715366584!2d31.2789281!3d30.0656573!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458417729ea985b%3A0xbda04f2b5c46b87f!2sRamses%20II%20Obelisk!5e0!3m2!1sen!2sde!4v1635651682764!5m2!1sen!2sde'),
+(15, 0, 0, 0, 0, 'Egypt\'s Renaissance Statue', '0000-00-00 00:00:00', '30.065518', '31.2789281', '!1m14!1m8!1m3!1d3453.00057509001!2d31.2789281!3d30.065518!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145846d7f6fcbcfb%3A0x966f3e4889839c89!2sEgypt&#39;s%20Renaissance%20Statue!5e0!3m2!1sen!2sde!4v1635651616455!5m2!1sen!2sde'),
+(16, 0, 0, 0, 0, 'Memorial to the Unknown Soldier', '1890-02-03 00:00:00', '30.0653787', '31.2789281', '!1m14!1m8!1m3!1d3453.0054347930245!2d31.2789281!3d30.0653787!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e4dfcc182fd%3A0x764f6cd041419edc!2z2KfZhNmG2LXYqCDYp9mE2KrYsNmD2KfYsdmKINmE2YTYrNmG2K_ZiiDYp9mE2YXYrNmH2YjZhA!5e0!3m2!1sen!2sde!4v1635651557477!5m2!1sen!2sde'),
+(17, 0, 0, 0, 0, 'Pizza Hut', '1790-02-03 00:00:00', '30.0594641', '31.208124', '!1m14!1m8!1m3!1d3453.211756230119!2d31.208124!3d30.0594641!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145840c6155386f3%3A0xcb6887446cf9256e!2sPizza%20Hut!5e0!3m2!1sen!2sde!4v1635649978737!5m2!1sen!2sde'),
+(18, 0, 0, 0, 0, 'KFC', '1988-02-03 00:00:00', '30.0247740', '31.2168040', '!1m14!1m8!1m3!1d1727.1990570753137!2d31.216026327154843!3d30.025434376475314!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd3b9c941409d7dad!2sKFC!5e0!3m2!1sen!2sde!4v1635649270677!5m2!1sen!2sde'),
+(19, 0, 0, 0, 0, 'Mcdonald''s', '1989-02-03 00:00:00', '30.0594638', '31.2015579', '!1m14!1m8!1m3!1d3453.21176669421!2d31.2015579!3d30.0594638!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458411def47c5e3%3A0x78eb5a734ffa88e5!2sMcDonald&#39;s%20Zamalek!5e0!3m2!1sen!2sde!4v1635650031356!5m2!1sen!2sde'),
+(20, 0, 0, 0, 0, 'Zööba', '0000-00-00 00:00:00', '30.0594635', '31.1949918', '!1m14!1m8!1m3!1d3453.2117771583003!2d31.1949918!3d30.0594635!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145840e1ad5005d5%3A0x680e77dd198afca6!2zWsO2w7ZiYQ!5e0!3m2!1sen!2sde!4v1635650085851!5m2!1sen!2sde');
 
 -- --------------------------------------------------------
 
@@ -1782,16 +1782,35 @@ CREATE TABLE IF NOT EXISTS `professional_picture` (
   `image_file` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`pid`,`number`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `professional_picture`
 --
 
 INSERT INTO `professional_picture` (`email`, `pid`, `number`, `image_file`) VALUES
-('kimobasha3000@hotmail.com', 1, 2, 'dandy-web-s-out-21.jpg'),
-('kimobasha3000@hotmail.com', 1, 3, '2018-12-02.jpg'),
-('a.n.s.a.r.y@hotmail.com', 9, 1, '1.jpg');
+('a@a.com', 1, 1, 'dandy-web-s-out-21.jpg'),
+('a@a.com', 1, 2, '2018-12-02.jpg'),
+('ansary510@gmail.com', 2, 1, 'unnamed (City Stars).jpg'),
+('kimobasha3000@hotmail.com', 3, 1, 'caisi-exterior-3542-hor-feat.jpg'),
+('kimobasha3000@hotmail.com', 4, 1, '022631A_P.jpg'),
+('kimobasha3000@hotmail.com', 5, 1, 'sheherazade-hotel.jpg'),
+('kimobasha3000@hotmail.com', 6, 1, 'nmec-front.jpg'),
+('kimobasha3000@hotmail.com', 7, 1, '4450161860_4d382d734f_b.jpg'),
+('kimobasha3000@hotmail.com', 8, 1, 'Hatem_Egyptian_Geological_Museum.jpg'),
+('ansary510@gmail.com', 9, 1, 'Landscape-of-Cairo-Egypt-pyramids-on-the-background-drowning-in-waste-WOIMA-Corporation.png'),
+('ansary510@gmail.com', 10, 1, 'Alexandria-9-e1488051126787.jpg'),
+('ansary510@gmail.com', 11, 1, 'Luxor-City.jpg'),
+('ansary510@gmail.com', 12, 1, 'sharm-el-sheikh_1.jpg'),
+('khalid2355@yahoo.com', 13, 1, 'Great-Sphinx-Giza-Egypt.jpg'),
+('khalid2355@yahoo.com', 14, 1, '202010080516551655.jpg'),
+('khalid2355@yahoo.com', 15, 1, '16852288688_4ec0162ba8_z.jpg'),
+('khalid2355@yahoo.com', 16, 1, '1 (Memorial to the Unknown Soldier).jpg'),
+('khalid2355@yahoo.com', 17, 1, '4690979756_ba9b8f5a30_b.jpg'),
+('khalid2355@yahoo.com', 18, 1, '2020-02-07 (KFC).jpg'),
+('khalid2355@yahoo.com', 19, 1, '2021-06-25 (McDonald\'s).jpg'),
+('ansary510@gmail.com', 20, 1, '20210410_223812 (Zööba).jpg');
+
 
 --
 -- Triggers `professional_picture`
@@ -1822,7 +1841,7 @@ CREATE TABLE IF NOT EXISTS `question` (
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pid`,`question_number`),
   KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `question`
@@ -1862,7 +1881,7 @@ CREATE TABLE IF NOT EXISTS `rate` (
   `rate_value` int(11) DEFAULT NULL,
   PRIMARY KEY (`member_email`,`pid`,`criteria_name`),
   KEY `pid` (`pid`,`criteria_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rate`
@@ -1987,7 +2006,7 @@ CREATE TABLE IF NOT EXISTS `rating_criteria` (
   `member_email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pid`,`criteria_name`),
   KEY `member_email` (`member_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rating_criteria`
@@ -2086,7 +2105,7 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
   `style` varchar(50) DEFAULT NULL,
   `cuisine` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `restaurant`
@@ -2109,7 +2128,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   `type` varchar(50) NOT NULL DEFAULT '',
   `price` decimal(9,2) DEFAULT NULL,
   PRIMARY KEY (`pid`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `room`
@@ -2134,7 +2153,7 @@ INSERT INTO `room` (`pid`, `type`, `price`) VALUES
 CREATE TABLE IF NOT EXISTS `sys_admin` (
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sys_admin`
@@ -2154,7 +2173,7 @@ CREATE TABLE IF NOT EXISTS `visited` (
   `pid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`member_email`,`pid`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `visited`

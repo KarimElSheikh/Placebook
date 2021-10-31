@@ -223,3 +223,11 @@ function esc_url($url) {
 function action($a, $b, $o) {
 	echo '?action='.$a.'&actionBy='.$b.'&actionOn='.$o;
 }
+
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}

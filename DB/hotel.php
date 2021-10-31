@@ -1,7 +1,7 @@
 <?php
 include_once"header.php";
 ?>
-<div class="well well-lg wrap-msg">
+<div class="well well-lg wrap-msg" style="width: 1300px;">
 	<div class ="row">
 		<div class = "col-sm-5">
 			<div class="subHeaderLabel">Hotels</div>
@@ -35,7 +35,7 @@ include_once"header.php";
 						$stmt->store_result();
 						$stmt->bind_result($cname);
 						while ($stmt->fetch()) { ?>
-							<li><a href="hotel.php?sort=2&cname=<?php echo $cname;?>"><?php echo $cname;?></a></li>
+							<li><a href="hotel.php?sort=2&cname=<?php echo $cname;?>"><?php echo utf8_encode($cname);?></a></li>
 						<?php }
 					}
 					$stmt->close();
@@ -71,7 +71,7 @@ include_once"header.php";
 
 	while ($stmt->fetch()) {
 ?>	<div class="row">
-		<div class ="col-sm-5"><h3><a href="place.php?id=<?php echo $pid;?>"><?php echo $name;?></a></h3></div>
+		<div class ="col-sm-5"><h3><a href="place.php?id=<?php echo $pid;?>"><?php echo utf8_encode($name);?></a></h3></div>
 		<div class ="col-sm-7"><h3>Likes: <?php echo round($num_likes, 2);?></h3></div>
 	</div>
 <?php
@@ -90,8 +90,8 @@ include_once"header.php";
 
 		while ($stmt->fetch()) {
 			?>	<div class="row">
-				<div class ="col-sm-5"><h3><a href="place.php?id=<?php echo $pid;?>"><?php echo $name;?></a></h3></div>
-				<div class ="col-sm-7"><h3><?php echo "$cname: ".round($avg, 2);?></h3></div>
+				<div class ="col-sm-5"><h3><a href="place.php?id=<?php echo $pid;?>"><?php echo utf8_encode($name);?></a></h3></div>
+				<div class ="col-sm-7"><h3><?php echo utf8_encode($cname).": ".round($avg, 2);?></h3></div>
 			</div>
 		<?php }
 	}
@@ -107,7 +107,7 @@ include_once"header.php";
 
 		while ($stmt->fetch()) {
 			?>	<div class="row">
-				<div class ="col-sm-5"><h3><a href="place.php?id=<?php echo $pid;?>"><?php echo $name;?></a></h3></div>
+				<div class ="col-sm-5"><h3><a href="place.php?id=<?php echo $pid;?>"><?php echo utf8_encode($name);?></a></h3></div>
 				<div class ="col-sm-7"><h3>Average room price: <?php echo "<span class='fa fa-dollar'></span>".round($price, 2);?></h3></div>
 			</div>
 		<?php
