@@ -249,14 +249,24 @@ Having count(*) =  (Select Max(maximum.count)
 				    Group by C2.pid) maximum);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_cities_sorted_by_likes`()
+BEGIN
+SELECT C.pid AS PID, P.name, COUNT(ML.pid) AS num_likes
+FROM city C
+inner join member_liked ML on C.pid = ML.pid
+inner join Place P on C.pid = P.pid
+Group by C.pid
+ORDER BY num_likes DESC, PID ASC;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_hotels_sort_by_avg_room_price`()
 BEGIN
-Select H.pid as PID, P.name, AVG(R.price) as Price
-From hotel H
-inner join room R on H.pid = R.pid
-inner join Place P on H.pid = P.pid
-Group by  H.pid
-Order by Price asc;
+SELECT H.pid as PID, P.name, AVG(R.price) AS Price
+FROM hotel H
+INNER JOIN room R ON H.pid = R.pid
+INNER JOIN Place P ON H.pid = P.pid
+GROUP BY H.pid
+ORDER BY Price ASC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_hotel_with_most_likes`()
@@ -273,6 +283,16 @@ Having count(*) =  (Select Max(maximum.count)
 				    Group by H2.pid) maximum);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_hotels_sorted_by_likes`()
+BEGIN
+SELECT H.pid as PID, P.name, COUNT(ML.pid) AS num_likes
+FROM hotel H
+inner join member_liked ML on H.pid = ML.pid
+inner join Place P on H.pid = P.pid
+Group by H.pid
+ORDER BY num_likes DESC, PID ASC;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_monument_with_most_likes`()
 BEGIN
 SELECT M.pid, P.name
@@ -287,12 +307,22 @@ Having count(*) =  (Select Max(maximum.count)
 				    Group by M2.pid) maximum);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_monuments_sorted_by_likes`()
+BEGIN
+SELECT M.pid AS PID, P.name, COUNT(ML.pid) AS num_likes
+FROM monument M
+INNER JOIN member_liked ML ON M.pid = ML.pid
+INNER JOIN Place P ON M.pid = P.pid
+GROUP BY M.pid
+ORDER BY num_likes DESC, PID ASC;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_museums_sort_by_ticket_price`()
 BEGIN
-SELECT M.pid as PID, P.name , ticketprice as Price
+SELECT M.pid AS PID, P.name, ticketprice AS Price
 FROM museum M
-inner join Place P on M.pid = P.pid
-Order by ticketprice asc;
+INNER JOIN Place P ON M.pid = P.pid
+ORDER BY ticketprice ASC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_museum_with_most_likes`()
@@ -307,6 +337,16 @@ Having count(*) =  (Select Max(maximum.count)
 				    From museum M2 
 				    inner join member_liked ML2 on M2.pid = ML2.pid
 				    Group by M2.pid) maximum);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_museums_sorted_by_likes`()
+BEGIN
+SELECT M.pid AS PID, P.name, COUNT(ML.pid) AS num_likes
+FROM museum M
+inner join member_liked ML on M.pid = ML.pid
+inner join Place P on M.pid = P.pid
+Group by M.pid
+ORDER BY num_likes DESC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_recommended_places`(
@@ -343,6 +383,17 @@ Having count(*) =  (Select Max(maximum.count)
 				    From restaurant R2 
 				    inner join member_liked ML2 on R2.pid = ML2.pid
 				    Group by R2.pid) maximum);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_restaurants_sorted_by_likes`()
+    NO SQL
+BEGIN
+SELECT R.pid, P.name, COUNT(ML.pid) AS num_likes
+FROM restaurant R
+INNER JOIN member_liked ML ON R.pid = ML.pid
+INNER JOIN Place P ON R.pid = P.pid
+GROUP BY R.pid
+ORDER BY num_likes DESC, R.pid ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_the_average_criteria_rating_of_a_place`(IN `inPID` INT, IN `inCriteria_name` VARCHAR(50))
@@ -646,12 +697,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `view_cities_according_to_rating_cri
 IN inCriteriaName varchar(50)
 )
 BEGIN
-SELECT C.pid, P.name, AVG(R.rate_value) as Rating
-FROM city C inner join rate R on C.pid = R.pid
-inner join place P on C.pid = P.pid
+SELECT C.pid AS PID, P.name, AVG(R.rate_value) AS Rating
+FROM city C INNER JOIN rate R ON C.pid = R.pid
+INNER JOIN place P ON C.pid = P.pid
 WHERE criteria_name = inCriteriaName
-Group By C.pid
-ORDER BY Rating DESC;
+GROUP BY C.pid
+ORDER BY Rating DESC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `view_comments`(
@@ -693,41 +744,46 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `view_hotels_according_to_rating_cri
 IN inCriteriaName varchar(50)
 )
 BEGIN
-SELECT H.pid, P.name, AVG(R.rate_value) as Rating
-FROM hotel H inner join rate R on H.pid = R.pid
-inner join place P on H.pid = P.pid
+SELECT H.pid AS PID, P.name, AVG(R.rate_value) AS Rating
+FROM hotel H INNER JOIN rate R ON H.pid = R.pid
+INNER JOIN place P ON H.pid = P.pid
 WHERE criteria_name = inCriteriaName
-Group By H.pid
-ORDER BY Rating DESC;
+GROUP BY H.pid
+ORDER BY Rating DESC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `view_information`(
 IN inPID int
 )
 BEGIN
-IF (EXISTS (SELECT * FROM hotel WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Hotel' as type, I.text
-From place P inner join Information I on P.pid = I.pid
-inner join hotel H on P.pid = H.pid
+IF (EXISTS (SELECT * FROM restaurant WHERE inPID = pid)) THEN
+SELECT P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Restaurant' AS type, R.style, R.cuisine, I.text
+FROM place P INNER JOIN Information I ON P.pid = I.pid
+INNER JOIN restaurant R ON P.pid = R.pid
+WHERE P.pid = inPID;
+ELSEIF (EXISTS (SELECT * FROM hotel WHERE inPID = pid)) THEN
+SELECT P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Hotel' AS type, I.text
+FROM place P INNER JOIN Information I ON P.pid = I.pid
+INNER JOIN hotel H ON P.pid = H.pid
 WHERE P.pid = inPID;
 ELSEIF (EXISTS (SELECT * FROM museum WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Museum' as type, M.openinghours, M.closinghours, M.ticketprice, I.text
-From place P inner join Information I on P.pid = I.pid
-inner join museum M on P.pid = M.pid
+SELECT P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Museum' AS type, M.openinghours, M.closinghours, M.ticketprice, I.text
+FROM place P INNER JOIN Information I ON P.pid = I.pid
+INNER JOIN museum M ON P.pid = M.pid
 WHERE P.pid = inPID;
 ELSEIF (EXISTS (SELECT * FROM monument WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Monument' as type, M.description, I.text
-From place P inner join Information I on P.pid = I.pid
-inner join monument M on P.pid = M.pid
+SELECT P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Monument' AS type, M.description, I.text
+FROM place P INNER JOIN Information I ON P.pid = I.pid
+INNER JOIN monument M ON P.pid = M.pid
 WHERE P.pid = inPID;
 ELSEIF (EXISTS (SELECT * FROM city WHERE inPID = pid)) THEN
-Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'City' as type, C.location, C.coastalcity, I.text
-From place P inner join Information I on P.pid = I.pid
-inner join city C on P.pid = C.pid
+SELECT P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'City' AS type, C.location, C.coastalcity, I.text
+FROM place P INNER JOIN Information I ON P.pid = I.pid
+INNER JOIN city C ON P.pid = C.pid
 WHERE P.pid = inPID;
 ELSE
-Select P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Other' as type, I.text
-From place P inner join Information I on P.pid = I.pid
+SELECT P.name, P.building_date, P.latitude, P.longitude, P.GMaps_pb, 'Other' AS type, I.text
+FROM place P INNER JOIN Information I ON P.pid = I.pid
 WHERE P.pid = inPID;
 END IF;
 END$$
@@ -747,24 +803,24 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `view_monuments_according_to_rating_
 IN inCriteriaName varchar(50)
 )
 BEGIN
-SELECT M.pid, P.name, AVG(R.rate_value) as Rating
-FROM monument M inner join rate R on M.pid = R.pid
-inner join place P on M.pid = P.pid
+SELECT M.pid AS PID, P.name, AVG(R.rate_value) AS Rating
+FROM monument M INNER JOIN rate R ON M.pid = R.pid
+INNER JOIN place P ON M.pid = P.pid
 WHERE criteria_name = inCriteriaName
-Group By M.pid
-ORDER BY Rating DESC;
+GROUP BY M.pid
+ORDER BY Rating DESC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `view_museums_according_to_rating_criteria`(
 IN inCriteriaName varchar(50)
 )
 BEGIN
-SELECT M.pid, P.name, AVG(R.rate_value) as Rating
-FROM museum M inner join rate R on M.pid = R.pid
-inner join place P on M.pid = P.pid
+SELECT M.pid AS PID, P.name, AVG(R.rate_value) AS Rating
+FROM museum M INNER JOIN rate R ON M.pid = R.pid
+INNER JOIN place P ON M.pid = P.pid
 WHERE criteria_name = inCriteriaName
-Group By M.pid
-ORDER BY Rating DESC;
+GROUP BY M.pid
+ORDER BY Rating DESC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `view_pending_incoming_requests`(
@@ -857,12 +913,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `view_restaurants_according_to_ratin
 IN inCriteriaName varchar(50)
 )
 BEGIN
-SELECT R.pid, P.name, AVG(R2.rate_value) as Rating
-FROM restaurant R inner join rate R2 on R.pid = R2.pid
-inner join place P on R.pid = P.pid
+SELECT R.pid AS PID, P.name, AVG(R2.rate_value) AS Rating
+FROM restaurant R INNER JOIN rate R2 ON R.pid = R2.pid
+INNER JOIN place P ON R.pid = P.pid
 WHERE criteria_name = inCriteriaName
-Group By R.pid
-ORDER BY Rating DESC;
+GROUP BY R.pid
+ORDER BY Rating DESC, PID ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `view_thread`(
@@ -1709,7 +1765,7 @@ INSERT INTO `place` (`pid`, `next_table_id`, `next_table_id2`, `next_table_id3`,
 (15, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null),
 (16, 0, 0, 0, 0, 'Ziad Monument', '1890-02-03 00:00:00', '19.00', '22.22', null),
 (17, 0, 0, 0, 0, 'Pizza Hut', '1790-02-03 00:00:00', '19.00', '16.22', null),
-(18, 0, 0, 0, 0, 'KFC', '1888-02-03 00:00:00', '19.00', '12.22', null),
+(18, 0, 0, 0, 0, 'KFC', '1988-02-03 00:00:00', '30.0247740', '31.2168040', '!1m18!1m12!1m3!1d1039220.4804181572!2d30.449387532583305!3d31.176895759059406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145846d882f78805%3A0xd3b9c941409d7dad!2sKFC!5e0!3m2!1sen!2sde!4v1635638454937!5m2!1sen!2sde'),
 (19, 0, 0, 0, 0, 'Mcdonald''s', '1989-02-03 00:00:00', '19.00', '71.77', null),
 (20, 0, 0, 0, 0, 'jaka', '0000-00-00 00:00:00', '22.00', '43.00', null);
 

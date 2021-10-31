@@ -54,16 +54,14 @@ else if($options =='1')
 	while ($stmt->fetch()) {
 ?>
 
-<div class="well well-lg wrap-msg">
-	<div><a href="place.php?id=<?php echo $pid;?>" class="HIco"><?php echo $name;?></a></div>
+<div class="HIco well well-lg wrap-msg" style="float: none;">
+	<a href="place.php?id=<?php echo $pid;?>"><?php echo $name;?></a>
 </div>
 <?php
 }
 }
 }
 }
-
-
 }
 include "footer.php";
 ?>	
