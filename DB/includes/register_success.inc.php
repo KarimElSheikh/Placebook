@@ -15,6 +15,6 @@ if(isset($_SESSION['email']))
     add_phone($mysqli,$email,$phone1);
     add_phone($mysqli,$email,$phone2);
     add_phone($mysqli,$email,$phone3);
-    header('Location: ../index.php');        
+    header('Location: index.php');        
     exit();
 }
