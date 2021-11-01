@@ -56,6 +56,11 @@ A video demonstrating the friend request and adding comments on places' pages fe
 
 <a href="https://www.youtube.com/watch?feature=player_embedded&v=-dRTvePcCAc" target="_blank"><img src="https://user-images.githubusercontent.com/10839251/138980526-a338321e-a208-4e57-8362-50eaab751dcf.png" 
 alt="https://www.youtube.com/watch?v=-dRTvePcCAc" width="640" height="360" border="10" /></a>
+
+A second video demonstrating the Google Maps and rating places/removing rating features of the website.
+
+<a href="https://www.youtube.com/watch?v=YOL7n-EB_6k" target="_blank"><img src="https://user-images.githubusercontent.com/10839251/139607952-d8037717-7e76-457b-8e8b-864fe8fe371b.png" 
+alt="https://www.youtube.com/watch?v=YOL7n-EB_6k" width="640" height="360" border="10" /></a>
 # To do
 * Add more videos showcasing the rest of the website functions.
 * Clean up the project's files more (Currently a lot of different versions of the website are present which were used during the development/testing).
